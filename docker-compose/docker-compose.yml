@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   redis-db:
@@ -33,11 +33,17 @@ services:
         RELEASE_VERSION: 9.0.2
     links:
       - db:database
+    extra_hosts:
+      - "host.docker.internal:host-gateway" # Linux: map the host into container DNS
     environment:
-        ETHEREUM_JSONRPC_HTTP_URL: http://host.docker.internal:8545/
-        ETHEREUM_JSONRPC_TRACE_URL: http://host.docker.internal:8545/
-        ETHEREUM_JSONRPC_WS_URL: ws://host.docker.internal:8545/
-        CHAIN_ID: '1337'
+      ETHEREUM_JSONRPC_HTTP_URL: http://l1bc-demo-dev-chain-rpc-216332031.us-east-1.elb.amazonaws.com
+      ETHEREUM_JSONRPC_TRACE_URL: http://l1bc-demo-dev-chain-rpc-216332031.us-east-1.elb.amazonaws.com
+      ETHEREUM_JSONRPC_VARIANT: "geth" # set to your node type
+      CHAIN_ID: "262144" # replace with your chain id
+      # optional tuning:
+      INDEXER_TX_ACTIONS_ENABLE: "true" # if you want tx action indexing enabled
+    ports:
+      - "4001:4000"
 
   nft_media_handler:
     depends_on:
@@ -61,12 +67,12 @@ services:
       file: ./services/sig-provider.yml
       service: sig-provider
 
-  frontend:
-    depends_on:
-      - backend
-    extends:
-      file: ./services/frontend.yml
-      service: frontend
+  # frontend:
+  #   depends_on:
+  #     - backend
+  #   extends:
+  #     file: ./services/frontend.yml
+  #     service: frontend
 
   stats-db-init:
     extends:
@@ -97,11 +103,13 @@ services:
       file: ./services/user-ops-indexer.yml
       service: user-ops-indexer
 
-  proxy:
-    depends_on:
-      - backend
-      - frontend
-      - stats
-    extends:
-      file: ./services/nginx.yml
-      service: proxy
+  # proxy:
+  #   depends_on:
+  #     - backend
+  #     - frontend
+  #     - stats
+  #   extends:
+  #     file: ./services/nginx.yml
+  #     service: proxy
+  #   ports:
+  #     - "4000:80"
