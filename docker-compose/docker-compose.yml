@@ -42,8 +42,6 @@ services:
       CHAIN_ID: "262144" # replace with your chain id
       # optional tuning:
       INDEXER_TX_ACTIONS_ENABLE: "true" # if you want tx action indexing enabled
-    ports:
-      - "8080:8080"
 
   nft_media_handler:
     depends_on:
