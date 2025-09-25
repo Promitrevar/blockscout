@@ -43,7 +43,7 @@ services:
       # optional tuning:
       INDEXER_TX_ACTIONS_ENABLE: "true" # if you want tx action indexing enabled
     ports:
-      - "4000:4001"
+      - "4001:4000"
 
   nft_media_handler:
     depends_on:
@@ -111,5 +111,3 @@ services:
   #   extends:
   #     file: ./services/nginx.yml
   #     service: proxy
-  #   ports:
-  #     - "4000:80"
