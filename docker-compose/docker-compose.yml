@@ -42,8 +42,6 @@ services:
       CHAIN_ID: "262144" # replace with your chain id
       # optional tuning:
       INDEXER_TX_ACTIONS_ENABLE: "true" # if you want tx action indexing enabled
-    ports:
-      - "4001:4000"
 
   nft_media_handler:
     depends_on:
@@ -67,12 +65,12 @@ services:
       file: ./services/sig-provider.yml
       service: sig-provider
 
-  # frontend:
-  #   depends_on:
-  #     - backend
-  #   extends:
-  #     file: ./services/frontend.yml
-  #     service: frontend
+  frontend:
+    depends_on:
+      - backend
+    extends:
+      file: ./services/frontend.yml
+      service: frontend
 
   stats-db-init:
     extends:
@@ -103,11 +101,11 @@ services:
       file: ./services/user-ops-indexer.yml
       service: user-ops-indexer
 
-  # proxy:
-  #   depends_on:
-  #     - backend
-  #     - frontend
-  #     - stats
-  #   extends:
-  #     file: ./services/nginx.yml
-  #     service: proxy
+  proxy:
+    depends_on:
+      - backend
+      - frontend
+      - stats
+    extends:
+      file: ./services/nginx.yml
+      service: proxy
