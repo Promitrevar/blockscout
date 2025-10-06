@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   frontend:
-    image: 164782962997.dkr.ecr.us-east-1.amazonaws.com/l1bc-demo/bc-explorer-fe:latest-2
+    image: 164782962997.dkr.ecr.us-east-1.amazonaws.com/l1bc-demo/bc-explorer-fe:latest
     pull_policy: always
     platform: linux/arm64
     restart: always
